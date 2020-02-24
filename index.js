@@ -1,5 +1,14 @@
 const dotenv = require("dotenv");
 dotenv.config();
+const http = require("http");
+
+const requestListener = function(req, res) {
+  res.writeHead(200);
+  res.end("<a href='http://t.me/MyCoinMasterBot'>Coin Master Bot</a>");
+};
+
+const server = http.createServer(requestListener);
+server.listen(process.env.PORT || 8080);
 
 const tg = require("telegraf");
 const request = require("request");
