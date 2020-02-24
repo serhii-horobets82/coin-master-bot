@@ -1,0 +1,27 @@
+{
+  "name": "coin-master-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot for Coin Master",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serhii-horobets82/coin-master-bot.git"
+  },
+  "author": {
+    "name": "Serhii Horobets",
+    "email": "serhii.horobets82@gmail.com"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/serhii-horobets82/coin-master-bot/issues"
+  },
+  "homepage": "https://github.com/serhii-horobets82/coin-master-bot#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "request": "^2.88.2",
+    "telegraf": "^3.36.0"
+  }
+}

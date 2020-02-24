@@ -1,0 +1,2104 @@
+{
+	"info": {
+		"_postman_id": "89aafe75-9d21-4e71-9cc6-c88bd59f8357",
+		"name": "MoonActive",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6534e407-0630-48ce-ac90-b6b01721a30b",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.sessionToken);",
+							"postman.setEnvironmentVariable(\"userId\", jsonData.userId);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2UiOnsiaWQiOiJmNzRmZDdlYS0zMDNlLTQ1NjktYTUxOS05OWE2ZWUxZjgwNDkifSwiaWF0IjoxNTgyMjEyNjUzfQ.fPL7DQVYBw5CSFCV8aBKzpFY81aume8KeiLsR185NGY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"value": "3.5.49",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Expect",
+						"value": "100-continue",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-PLATFORM",
+						"value": "Android",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200220_3",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "Device[os]",
+							"value": "Android",
+							"type": "text"
+						},
+						{
+							"key": "Client[version]",
+							"value": "3.5_fband",
+							"type": "text"
+						},
+						{
+							"key": "Device[version]",
+							"value": "5.1.1",
+							"type": "text"
+						},
+						{
+							"key": "seq",
+							"value": "sdfsdf",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/login",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Config",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Expect",
+						"type": "text",
+						"value": "100-continue",
+						"disabled": true
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "map[locale]",
+							"value": "en",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/config",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BalanceWithConfig",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3a5c495a-8cae-45b0-9913-dd404fa90f22",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"cm.spins\", jsonData.spins);",
+							"postman.setEnvironmentVariable(\"cm.coins\", jsonData.coins);",
+							"postman.setEnvironmentVariable(\"cm.seq\", jsonData.seq);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "X-Unity-Version",
+						"value": "2018.4.0f1",
+						"type": "text"
+					},
+					{
+						"key": "X-PLATFORM",
+						"value": "Android",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "Device[os]",
+							"value": "Android",
+							"type": "text"
+						},
+						{
+							"key": "extended",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "config",
+							"value": "all",
+							"type": "text"
+						},
+						{
+							"key": "segmented",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "include[0]",
+							"value": "pets",
+							"type": "text"
+						},
+						{
+							"key": "include[1]",
+							"value": "vquestRewards",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/balance",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"balance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateFbData",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3a5c495a-8cae-45b0-9913-dd404fa90f22",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"fbToken\", jsonData.fbToken);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Expect",
+						"type": "text",
+						"value": "100-continue",
+						"disabled": true
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "User[fb_token]",
+							"value": "EAAKegZAhKD1IBAMWyJlZCL1KPrGzIEimd7npmP159XeTrc3JmVUHEPEIjqQPz61aQH9inia6RUwjsZAgpY1jpxPYQaaUpHZB8GlDueLUoxFZCwpZCh3KZAsZBvQkv6ApGSOVQAZA9byAgXJskEJjoHGLUJ5oCceNveP5k8HAMzyJJYgcTavliR63lZCeXJv2FanfiAJOYKltjOxAZDZD",
+							"type": "text"
+						},
+						{
+							"key": "p",
+							"value": "fb",
+							"type": "text"
+						},
+						{
+							"key": "Client[version]",
+							"value": "3.5.49_fband",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/update_fb_data",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"update_fb_data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Balance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7824f5ed-4369-4bb0-97a1-ecc22f038b1f",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"cm.spins\", jsonData.spins);",
+							"postman.setEnvironmentVariable(\"cm.coins\", jsonData.coins);",
+							"postman.setEnvironmentVariable(\"cm.seq\", jsonData.seq);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Expect",
+						"type": "text",
+						"value": "100-continue",
+						"disabled": true
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "Device[os]",
+							"value": "Android",
+							"type": "text"
+						},
+						{
+							"key": "Client[version]",
+							"value": "3.5.49",
+							"type": "text"
+						},
+						{
+							"key": "extended",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "segmented",
+							"value": "true",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/balance",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"balance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AllMessages",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7824f5ed-4369-4bb0-97a1-ecc22f038b1f",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"cm.spins\", jsonData.spins);",
+							"postman.setEnvironmentVariable(\"cm.coins\", jsonData.coins);",
+							"postman.setEnvironmentVariable(\"cm.seq\", jsonData.seq);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Expect",
+						"type": "text",
+						"value": "100-continue",
+						"disabled": true
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/all_messages",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"all_messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7824f5ed-4369-4bb0-97a1-ecc22f038b1f",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"cm.spins\", jsonData.spins);",
+							"postman.setEnvironmentVariable(\"cm.coins\", jsonData.coins);",
+							"postman.setEnvironmentVariable(\"cm.seq\", jsonData.seq);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "X-Unity-Version",
+						"value": "2018.4.0f1",
+						"type": "text"
+					},
+					{
+						"key": "X-PLATFORM",
+						"value": "Android",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/sets",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"sets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Friends",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7824f5ed-4369-4bb0-97a1-ecc22f038b1f",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"cm.spins\", jsonData.spins);",
+							"postman.setEnvironmentVariable(\"cm.coins\", jsonData.coins);",
+							"postman.setEnvironmentVariable(\"cm.seq\", jsonData.seq);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "X-Unity-Version",
+						"type": "text",
+						"value": "2018.4.0f1"
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "{{fbToken}}",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "non_players",
+							"value": "500",
+							"type": "text"
+						},
+						{
+							"key": "p",
+							"value": "fb",
+							"type": "text"
+						},
+						{
+							"key": "snfb",
+							"value": "true",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/friends",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"friends"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Balance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7824f5ed-4369-4bb0-97a1-ecc22f038b1f",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"cm.spins\", jsonData.spins);",
+							"postman.setEnvironmentVariable(\"cm.coins\", jsonData.coins);",
+							"postman.setEnvironmentVariable(\"cm.seq\", jsonData.seq);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "X-Unity-Version",
+						"value": "2018.4.0f1",
+						"type": "text"
+					},
+					{
+						"key": "X-PLATFORM",
+						"value": "Android",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "{{fbToken}}",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "Device[os]",
+							"value": "Android",
+							"type": "text"
+						},
+						{
+							"key": "Client[version]",
+							"value": "3.5.49",
+							"type": "text"
+						},
+						{
+							"key": "extended",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "segmented",
+							"value": "true",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/balance",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"balance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Spin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7824f5ed-4369-4bb0-97a1-ecc22f038b1f",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"cm.spins\", jsonData.spins);",
+							"postman.setEnvironmentVariable(\"cm.coins\", jsonData.coins);",
+							"postman.setEnvironmentVariable(\"cm.seq\", jsonData.seq);",
+							"postman.setEnvironmentVariable(\"cm.nextSeq\", parseInt(jsonData.seq)+1);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "X-Unity-Version",
+						"type": "text",
+						"value": "2018.4.0f1"
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android"
+					},
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "{{fbToken}}",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "seq",
+							"value": "{{cm.nextSeq}}",
+							"type": "text"
+						},
+						{
+							"key": "auto_spin",
+							"value": "False",
+							"type": "text"
+						},
+						{
+							"key": "bet",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "Client[version]",
+							"value": "3.5.49_fband",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/spin",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"spin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reward",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7824f5ed-4369-4bb0-97a1-ecc22f038b1f",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"cm.spins\", jsonData.spins);",
+							"postman.setEnvironmentVariable(\"cm.coins\", jsonData.coins);",
+							"postman.setEnvironmentVariable(\"cm.seq\", jsonData.seq);",
+							"postman.setEnvironmentVariable(\"cm.nextSeq\", parseInt(jsonData.seq)+1);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "X-Unity-Version",
+						"type": "text",
+						"value": "2018.4.0f1"
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android"
+					},
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200224_1",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "{{fbToken}}",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "product",
+							"value": "village_video_button",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/request_video_reward",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"request_video_reward"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Balance Reward",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7824f5ed-4369-4bb0-97a1-ecc22f038b1f",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"cm.spins\", jsonData.spins);",
+							"postman.setEnvironmentVariable(\"cm.coins\", jsonData.coins);",
+							"postman.setEnvironmentVariable(\"cm.seq\", jsonData.seq);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "X-Unity-Version",
+						"type": "text",
+						"value": "2018.4.0f1"
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android"
+					},
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200224_1",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "{{fbToken}}",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "Device[os]",
+							"value": "Android",
+							"type": "text"
+						},
+						{
+							"key": "Client[version]",
+							"value": "3.5.49",
+							"type": "text"
+						},
+						{
+							"key": "extended",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "segmented",
+							"value": "true",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/balance",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"balance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upgrade",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Expect",
+						"type": "text",
+						"value": "100-continue",
+						"disabled": true
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "10e48028ae753424bf67",
+							"type": "text"
+						},
+						{
+							"key": "extended",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "item",
+							"value": "Crop",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "11",
+							"type": "text"
+						},
+						{
+							"key": "include[0]",
+							"value": "pets",
+							"type": "text"
+						},
+						{
+							"key": "include[1]",
+							"value": "vquestRewards",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/upgrade",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"upgrade"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upgrade Crop",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Expect",
+						"type": "text",
+						"value": "100-continue",
+						"disabled": true
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "10e48028ae753424bf67",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "item",
+							"value": "Crop",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "include[0]",
+							"value": "pets",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/upgrade",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"upgrade"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upgrade Ship",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Expect",
+						"type": "text",
+						"value": "100-continue",
+						"disabled": true
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "10e48028ae753424bf67",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "item",
+							"value": "Farm",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "include[0]",
+							"value": "pets",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/upgrade",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"upgrade"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Config after upgrade",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Expect",
+						"type": "text",
+						"value": "100-continue",
+						"disabled": true
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "10e48028ae753424bf67",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "map[MaxXP]",
+							"value": "20",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/config",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Spin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "X-CLIENT-VERSION",
+						"type": "text",
+						"value": "3.5.49"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					},
+					{
+						"key": "Expect",
+						"type": "text",
+						"value": "100-continue",
+						"disabled": true
+					},
+					{
+						"key": "X-PLATFORM",
+						"type": "text",
+						"value": "Android",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "Device[udid]",
+							"value": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+							"type": "text"
+						},
+						{
+							"key": "API_KEY",
+							"value": "viki",
+							"type": "text"
+						},
+						{
+							"key": "API_SECRET",
+							"value": "coin",
+							"type": "text"
+						},
+						{
+							"key": "Device[change]",
+							"value": "20200223_4",
+							"type": "text"
+						},
+						{
+							"key": "fbToken",
+							"value": "10e48028ae753424bf67",
+							"type": "text"
+						},
+						{
+							"key": "locale",
+							"value": "en",
+							"type": "text"
+						},
+						{
+							"key": "seq",
+							"value": "27",
+							"type": "text"
+						},
+						{
+							"key": "auto_spin",
+							"value": "True",
+							"type": "text"
+						},
+						{
+							"key": "bet",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "Client[version]",
+							"value": "3.5.49_fband",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://vik-game.moonactive.net/api/v1/users/{{userId}}/spin",
+					"protocol": "https",
+					"host": [
+						"vik-game",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"{{userId}}",
+						"spin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get pool",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://static.moonactive.net/data/vikings/production-3_5_fband_Pool-all.json?p=1582206376.48826 ",
+					"protocol": "https",
+					"host": [
+						"static",
+						"moonactive",
+						"net"
+					],
+					"path": [
+						"data",
+						"vikings",
+						"production-3_5_fband_Pool-all.json"
+					],
+					"query": [
+						{
+							"key": "p",
+							"value": "1582206376.48826 "
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
