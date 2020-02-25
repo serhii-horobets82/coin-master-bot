@@ -48,11 +48,10 @@ bot.command(["/start", "/menu"], ({ reply }) =>
   reply(
     "menu",
     Markup.keyboard([
-      "🔑 Init",
-      "💰 Balance",
-      "🎲 Spin x 1",
-      "🎲 Spin x 2",
-      "🎲 Spin x 3"
+      ["🔑 Init"],
+      ["💰 Balance"],
+      ["🎲 Spin x 1", "🎲 Spin x 3"],
+      ["⚒️ Up Ship", "⚒️ Up Crop", "⚒️ Up Statue", "⚒️ Up House"]
     ])
       .oneTime()
       .resize()
@@ -117,12 +116,38 @@ bot.hears(["/balance", "💰 Balance"], ctx => {
   };
   request(options, function(error, response) {
     if (error) throw new Error(error);
-    const { coins, spins, seq } = JSON.parse(response.body);
+    const {
+      coins,
+      spins,
+      seq,
+      name,
+      shields,
+      lastName,
+      village,
+      Ship,
+      Farm,
+      Crop,
+      Statue,
+      House
+    } = JSON.parse(response.body);
     ctx.session.seq = seq;
     ctx.session.coins = +coins;
-    ctx.replyWithMarkdown(
-      `coins: *${coins}*\nspins: *${spins}*\nseq: *${seq}*`
-    );
+    ctx.session.Ship = +Ship;
+    ctx.session.Farm = +Farm;
+    ctx.session.Crop = +Crop;
+    ctx.session.Statue = +Statue;
+    ctx.session.House = +House;
+    ctx.replyWithMarkdown(`Coins: *${coins}*
+Spins: *${spins}*
+Sequence: *${seq}*
+User: *${lastName} ${name}*
+Shields *${shields}*
+Village: *${village}*
+Ship: *${Ship}*
+Farm: *${Farm}*
+Crop: *${Crop}*
+Statue: *${Statue}*
+House: *${House}*`);
   });
   logMsg(ctx);
 });
@@ -131,7 +156,6 @@ bot.hears([/\/spin x/gi, /🎲 Spin x/gi], ctx => {
   let xbet = +ctx.message.text
     .replace(/🎲 Spin x/gi, "")
     .replace(/\/spin x/gi, "");
-  console.log("[" + xbet + "]");
   if (!ctx.session.isInitialized) {
     ctx.replyWithMarkdown("Not initialized session!");
     return;
@@ -165,10 +189,71 @@ bot.hears([/\/spin x/gi, /🎲 Spin x/gi], ctx => {
     const { coins, spins, seq } = JSON.parse(response.body);
 
     ctx.replyWithMarkdown(
-      `win *${+coins -
-        ctx.session
-          .coins}*\n\nStatus:\n coins: *${coins}*\n spins: *${spins}*\n seq: *${seq}*`
+      `Win *${+coins - ctx.session.coins}*
+Status:
+ Coins: *${coins}* 
+ Spins: *${spins}*
+ Sequence: *${seq}*`
     );
+    ctx.session.seq = seq;
+    ctx.session.coins = coins;
+  });
+  logMsg(ctx);
+});
+
+bot.hears([/⚒️ Up /gi], ctx => {
+  let item = ctx.message.text.replace(/⚒️ Up /gi, "");
+  let itemCount = ctx.session[item];
+  if (!ctx.session.isInitialized) {
+    ctx.replyWithMarkdown("Not initialized session!");
+    return;
+  }
+
+  var options = {
+    method: "POST",
+    url: `https://vik-game.moonactive.net/api/v1/users/${ctx.session.userId}/upgrade`,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "X-CLIENT-VERSION": "3.5.49",
+      "X-Unity-Version": "2018.4.0f1",
+      "X-PLATFORM": "Android",
+      Authorization: `Bearer ${ctx.session.sessionToken}`
+    },
+    form: {
+      "Device[udid]": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+      API_KEY: "viki",
+      API_SECRET: "coin",
+      "Device[change]": "20200224_3",
+      fbToken: "10e48028ae753424bf67",
+      locale: "en",
+      item,
+      state: itemCount,
+      "include[0]": "pets"
+    }
+  };
+  request(options, function(error, response) {
+    if (error) throw new Error(error);
+    const {
+      ok,
+      coins,
+      spins,
+      seq,
+      Ship,
+      Farm,
+      Crop,
+      Statue,
+      House
+    } = JSON.parse(response.body);
+    ctx.replyWithMarkdown(`
+  Status:
+   Ok: *${ok}*
+   Coins: *${coins}* 
+   Village: *${village}*
+   Ship: *${Ship}*
+   Farm: *${Farm}*
+   Crop: *${Crop}*
+   Statue: *${Statue}*
+   House: *${House}*`);
     ctx.session.seq = seq;
     ctx.session.coins = coins;
   });
