@@ -38,16 +38,6 @@ function logOutMsg(ctx, text) {
   console.log(">", { id: ctx.chat.id }, text);
 }
 
-const keyboard = Markup.inlineKeyboard([
-  Markup.urlButton(
-    "❤️",
-    "https://github.com/serhii-horobets82/coin-master-bot"
-  ),
-  Markup.callbackButton("Delete", "delete")
-]);
-
-bot.action("delete", ({ deleteMessage }) => deleteMessage());
-
 bot.command("about", ctx => {
   logMsg(ctx);
   logOutMsg(ctx, aboutMsg);
@@ -57,7 +47,13 @@ bot.command("about", ctx => {
 bot.command(["/start", "/menu"], ({ reply }) =>
   reply(
     "menu",
-    Markup.keyboard(["🔑 Init", "💰 Balance", "🎲 Spin"])
+    Markup.keyboard([
+      "🔑 Init",
+      "💰 Balance",
+      "🎲 Spin x 1",
+      "🎲 Spin x 2",
+      "🎲 Spin x 3"
+    ])
       .oneTime()
       .resize()
       .extra()
@@ -89,10 +85,10 @@ bot.hears(["/init", "🔑 Init"], ctx => {
   request(options, function(error, response) {
     if (error) throw new Error(error);
     let { userId, sessionToken } = JSON.parse(response.body);
+    ctx.session.isInitialized = true;
     ctx.session.sessionToken = sessionToken;
     ctx.session.userId = userId;
     ctx.replyWithMarkdown(`userId: *${userId}*`);
-    ctx.se;
   });
 
   logMsg(ctx);
@@ -100,6 +96,11 @@ bot.hears(["/init", "🔑 Init"], ctx => {
 });
 
 bot.hears(["/balance", "💰 Balance"], ctx => {
+  if (!ctx.session.isInitialized) {
+    ctx.replyWithMarkdown("Not initialized session!");
+    return;
+  }
+
   var options = {
     method: "POST",
     url: `https://vik-game.moonactive.net/api/v1/users/${ctx.session.userId}/balance`,
@@ -119,12 +120,23 @@ bot.hears(["/balance", "💰 Balance"], ctx => {
     const { coins, spins, seq } = JSON.parse(response.body);
     ctx.session.seq = seq;
     ctx.session.coins = +coins;
-    ctx.replyWithMarkdown(`coins: *${coins}*\nspins: *${spins}*\nseq: *${seq}*`);
+    ctx.replyWithMarkdown(
+      `coins: *${coins}*\nspins: *${spins}*\nseq: *${seq}*`
+    );
   });
   logMsg(ctx);
 });
 
-bot.hears(["/spin", "🎲 Spin"], ctx => {
+bot.hears([/\/spin x/gi, /🎲 Spin x/gi], ctx => {
+  let xbet = +ctx.message.text
+    .replace(/🎲 Spin x/gi, "")
+    .replace(/\/spin x/gi, "");
+  console.log("[" + xbet + "]");
+  if (!ctx.session.isInitialized) {
+    ctx.replyWithMarkdown("Not initialized session!");
+    return;
+  }
+
   var options = {
     method: "POST",
     url: `https://vik-game.moonactive.net/api/v1/users/${ctx.session.userId}/spin`,
@@ -144,15 +156,19 @@ bot.hears(["/spin", "🎲 Spin"], ctx => {
       locale: "en",
       seq: +ctx.session.seq + 1,
       auto_spin: "False",
-      bet: "1",
+      bet: xbet,
       "Client[version]": "3.5.49_fband"
     }
   };
   request(options, function(error, response) {
     if (error) throw new Error(error);
     const { coins, spins, seq } = JSON.parse(response.body);
-    
-    ctx.replyWithMarkdown(`win *${+coins - ctx.session.coins}*\n\nStatus:\n coins: *${coins}*\n spins: *${spins}*\n seq: *${seq}*`);
+
+    ctx.replyWithMarkdown(
+      `win *${+coins -
+        ctx.session
+          .coins}*\n\nStatus:\n coins: *${coins}*\n spins: *${spins}*\n seq: *${seq}*`
+    );
     ctx.session.seq = seq;
     ctx.session.coins = coins;
   });
