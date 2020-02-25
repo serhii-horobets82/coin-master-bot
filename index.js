@@ -1,14 +1,13 @@
 const dotenv = require("dotenv");
 dotenv.config();
-const http = require("http");
 
-const requestListener = function(req, res) {
-  res.writeHead(200);
-  res.end("<a href='http://t.me/MyCoinMasterBot'>Coin Master Bot</a>");
-};
+var express = require("express");
+var app = express();
 
-const server = http.createServer(requestListener);
-server.listen(process.env.PORT || 8080);
+app.use(express.static("public"));
+const listener = app.listen(process.env.PORT || 8080, function() {
+  console.log(`App listening on port ${listener.address().port}`);
+});
 
 const tg = require("telegraf");
 const request = require("request");
@@ -40,7 +39,10 @@ function logOutMsg(ctx, text) {
 }
 
 const keyboard = Markup.inlineKeyboard([
-  Markup.urlButton("❤️", "http://telegraf.js.org"),
+  Markup.urlButton(
+    "❤️",
+    "https://github.com/serhii-horobets82/coin-master-bot"
+  ),
   Markup.callbackButton("Delete", "delete")
 ]);
 
@@ -52,7 +54,7 @@ bot.command("about", ctx => {
   ctx.reply(aboutMsg);
 });
 
-bot.command("/menu", ({ reply }) =>
+bot.command(["/start", "/menu"], ({ reply }) =>
   reply(
     "menu",
     Markup.keyboard(["🔑 Init", "💰 Balance", "🎲 Spin"])
@@ -61,6 +63,17 @@ bot.command("/menu", ({ reply }) =>
       .extra()
   )
 );
+
+const formData = {
+  "Device[udid]": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
+  API_KEY: "viki",
+  API_SECRET: "coin",
+  "Device[change]": "20200220_3",
+  locale: "en",
+  "Device[os]": "Android",
+  "Client[version]": "3.5_fband",
+  "Device[version]": "5.1.1"
+};
 
 bot.hears(["/init", "🔑 Init"], ctx => {
   var options = {
@@ -71,23 +84,15 @@ bot.hears(["/init", "🔑 Init"], ctx => {
       "X-CLIENT-VERSION": "3.5.49",
       Authorization: `Bearer ${process.env.DEVICE_TOKEN}`
     },
-    form: {
-      "Device[udid]": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
-      API_KEY: "viki",
-      API_SECRET: "coin",
-      "Device[change]": "20200220_3",
-      locale: "en",
-      "Device[os]": "Android",
-      "Client[version]": "3.5_fband",
-      "Device[version]": "5.1.1"
-    }
+    form: { ...formData }
   };
   request(options, function(error, response) {
     if (error) throw new Error(error);
     let { userId, sessionToken } = JSON.parse(response.body);
     ctx.session.sessionToken = sessionToken;
     ctx.session.userId = userId;
-    ctx.reply(`${userId}`);
+    ctx.replyWithMarkdown(`userId: *${userId}*`);
+    ctx.se;
   });
 
   logMsg(ctx);
@@ -104,14 +109,7 @@ bot.hears(["/balance", "💰 Balance"], ctx => {
       Authorization: `Bearer ${ctx.session.sessionToken}`
     },
     form: {
-      "Device[udid]": "f74fd7ea-303e-4569-a519-99a6ee1f8049",
-      API_KEY: "viki",
-      API_SECRET: "coin",
-      "Device[change]": "20200223_4",
-      fbToken: "",
-      locale: "en",
-      "Device[os]": "Android",
-      "Client[version]": "3.5.49",
+      ...formData,
       extended: "true",
       segmented: "true"
     }
@@ -120,7 +118,8 @@ bot.hears(["/balance", "💰 Balance"], ctx => {
     if (error) throw new Error(error);
     const { coins, spins, seq } = JSON.parse(response.body);
     ctx.session.seq = seq;
-    ctx.reply(`coins: ${coins}\nspins: ${spins}\nseq: ${seq}`);
+    ctx.session.coins = +coins;
+    ctx.replyWithMarkdown(`coins: *${coins}*\nspins: *${spins}*\nseq: *${seq}*`);
   });
   logMsg(ctx);
 });
@@ -152,8 +151,10 @@ bot.hears(["/spin", "🎲 Spin"], ctx => {
   request(options, function(error, response) {
     if (error) throw new Error(error);
     const { coins, spins, seq } = JSON.parse(response.body);
+    
+    ctx.replyWithMarkdown(`win *${+coins - ctx.session.coins}*\n\nStatus:\n coins: *${coins}*\n spins: *${spins}*\n seq: *${seq}*`);
     ctx.session.seq = seq;
-    ctx.reply(`coins: ${coins}\nspins: ${spins}\nseq: ${seq}`);
+    ctx.session.coins = coins;
   });
   logMsg(ctx);
 });
