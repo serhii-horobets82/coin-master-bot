@@ -238,6 +238,7 @@ bot.hears([/⚒️ Up /gi], ctx => {
       coins,
       spins,
       seq,
+      village,
       Ship,
       Farm,
       Crop,
