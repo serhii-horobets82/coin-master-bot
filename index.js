@@ -9,6 +9,7 @@ const listener = app.listen(process.env.PORT || 8080, function() {
   console.log(`App listening on port ${listener.address().port}`);
 });
 
+var cron = require("node-cron");
 const tg = require("telegraf");
 const request = require("request");
 const { Extra, Markup, session } = require("telegraf");
@@ -17,6 +18,18 @@ const bot = new tg(process.env.BOT_TOKEN);
 bot.use(session());
 const aboutMsg =
   "This bot was created by @gorserg\nSource code can be found at https://github.com/serhii-horobets82/coin-master-bot";
+
+const TIMEOUT_UPGRADE = 10; // in min
+const TIMEOUT_SPIN = 10; // in min
+
+// bot.use(async (ctx, next) => {
+//   const start = new Date()
+//   await next()
+//   const ms = new Date() - start
+//   cron.schedule("*/2 * * * * *", () => {
+//     ctx.replyWithMarkdown(`ms`);
+//   });
+// })
 
 function userString(ctx) {
   return JSON.stringify(
@@ -75,7 +88,7 @@ bot.command("about", ctx => {
   ctx.reply(aboutMsg);
 });
 
-bot.command(["/start", "/menu"], ({ reply }) =>
+bot.command(["/", "/start", "/menu"], ({ reply }) =>
   reply(
     "menu",
     Markup.keyboard([
@@ -229,12 +242,13 @@ const singleSpin = async (seq, xbet, ctx) => {
   });
 };
 
-bot.hears([/\/SpinX/gi, /🎲 SpinX/gi], ctx => {
+bot.hears([/\/SpinX/gi, /🎲 \/SpinX/gi], ctx => {
   getBalance(ctx).then(async () => {
     let xbet = ctx.message.text
-      .replace(/🎲 Spin x/gi, "")
-      .replace(/\/spin x/gi, "")
+      .replace(/🎲 \/SpinX/gi, "")
+      .replace(/\/SpinX/gi, "")
       .trim();
+      console.log("xbet", xbet);
     if (!ctx.session.isInitialized) {
       ctx.replyWithMarkdown("Not initialized session!");
       return;
@@ -243,6 +257,22 @@ bot.hears([/\/SpinX/gi, /🎲 SpinX/gi], ctx => {
       let spins = ctx.session.spins;
       for (let index = 0; index < spins; index++) {
         await singleSpin(ctx.session.seq + index, 1, ctx);
+      }
+      let task = ctx.session.autoSpinCronTask;
+      if (!task) {
+        ctx.session.autoSpinCronTask = cron.schedule(
+          `*/${TIMEOUT_SPIN} * * * *`,
+          async () => {
+            ctx.replyWithMarkdown(`Start spin ...`);
+            getBalance(ctx).then(async () => {
+              let spins = ctx.session.spins;
+              for (let index = 0; index < spins; index++) {
+                await singleSpin(ctx.session.seq + index, 1, ctx);
+              }
+            });
+            ctx.replyWithMarkdown(`Finish spin ...`);
+          }
+        );
       }
     } else {
       xbet = +xbet;
@@ -295,13 +325,28 @@ const upgradeItem = async (item, ctx) => {
   });
 };
 
+let upgradeCronTask;
+
 bot.hears([/⚒️ /gi, "/All", ...items.map(i => "/" + i)], ctx => {
   let item = ctx.message.text.replace(/⚒️ /gi, "").replace(/\//gi, "");
-  console.log(item);
   initSession(ctx).then(async () => {
     if (item === "All") {
       for (let i of items) {
         await upgradeItem(i, ctx);
+      }
+
+      let task = ctx.session.upgradeCronTask;
+      if (!task) {
+        ctx.session.upgradeCronTask = cron.schedule(
+          `*/${TIMEOUT_UPGRADE} * * * *`,
+          async () => {
+            ctx.replyWithMarkdown(`Start upgrading ...`);
+            for (let i of items) {
+              await upgradeItem(i, ctx);
+            }
+            ctx.replyWithMarkdown(`finish upgrading ...`);
+          }
+        );
       }
     } else await upgradeItem(item, ctx);
   });
