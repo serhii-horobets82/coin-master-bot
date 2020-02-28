@@ -19,8 +19,8 @@ bot.use(session());
 const aboutMsg =
   "This bot was created by @gorserg\nSource code can be found at https://github.com/serhii-horobets82/coin-master-bot";
 
-const TIMEOUT_UPGRADE = 10; // in min
-const TIMEOUT_SPIN = 10; // in min
+const TIMEOUT_UPGRADE = 20; // in min
+const TIMEOUT_SPIN = 30; // in min
 
 // bot.use(async (ctx, next) => {
 //   const start = new Date()
