@@ -4,17 +4,22 @@ dotenv.config();
 var express = require("express");
 var app = express();
 
-app.use(express.static("public"));
-const listener = app.listen(process.env.PORT || 8080, function() {
-  console.log(`App listening on port ${listener.address().port}`);
-});
-
 var cron = require("node-cron");
 const tg = require("telegraf");
 const request = require("request");
 const { Extra, Markup, session } = require("telegraf");
 
-const bot = new tg(process.env.BOT_TOKEN);
+const { PORT, BOT_TOKEN, USE_EXPRESS, DEVICE_TOKEN } = process.env;
+console.log(typeof USE_EXPRESS);
+
+if (!USE_EXPRESS) {
+  app.use(express.static("public"));
+  const listener = app.listen(PORT || 8080, function() {
+    console.log(`App listening on port ${listener.address().port}`);
+  });
+}
+
+const bot = new tg(BOT_TOKEN);
 bot.use(session());
 const aboutMsg =
   "This bot was created by @gorserg\nSource code can be found at https://github.com/serhii-horobets82/coin-master-bot";
@@ -120,7 +125,7 @@ bot.hears(["/init", "🔑 Init"], ctx => {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "X-CLIENT-VERSION": "3.5.49",
-      Authorization: `Bearer ${process.env.DEVICE_TOKEN}`
+      Authorization: `Bearer ${DEVICE_TOKEN}`
     },
     form: { ...formData }
   };
@@ -149,7 +154,7 @@ const initSession = ctx => {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "X-CLIENT-VERSION": "3.5.49",
-        Authorization: `Bearer ${process.env.DEVICE_TOKEN}`
+        Authorization: `Bearer ${DEVICE_TOKEN}`
       },
       form: { ...formData }
     };
@@ -248,7 +253,7 @@ bot.hears([/\/SpinX/gi, /🎲 \/SpinX/gi], ctx => {
       .replace(/🎲 \/SpinX/gi, "")
       .replace(/\/SpinX/gi, "")
       .trim();
-      console.log("xbet", xbet);
+    console.log("xbet", xbet);
     if (!ctx.session.isInitialized) {
       ctx.replyWithMarkdown("Not initialized session!");
       return;
@@ -325,8 +330,6 @@ const upgradeItem = async (item, ctx) => {
   });
 };
 
-let upgradeCronTask;
-
 bot.hears([/⚒️ /gi, "/All", ...items.map(i => "/" + i)], ctx => {
   let item = ctx.message.text.replace(/⚒️ /gi, "").replace(/\//gi, "");
   initSession(ctx).then(async () => {
@@ -353,3 +356,4 @@ bot.hears([/⚒️ /gi, "/All", ...items.map(i => "/" + i)], ctx => {
 });
 
 bot.launch();
+console.log("start spin");
